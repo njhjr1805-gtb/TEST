@@ -1,5 +1,4 @@
 import express from "express";
-import fetch from "node-fetch";
 import xml2js from "xml2js";
 
 const app = express();
@@ -28,5 +27,4 @@ app.get("/", async (req, res) => {
     res.send(info ? info : "Aucune info");
 });
 
-const PORT = process.env.PORT;   // Render impose ce port
-app.listen(PORT, () => console.log(`Serveur lancé sur ${PORT}`));
+app.listen(3000, () => console.log("Serveur lancé"));
