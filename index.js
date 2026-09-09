@@ -5,6 +5,7 @@ const app = express();
 const parser = new xml2js.Parser();
 
 async function getRadioInfo() {
+    console.log("RC searching...")
     const url = "https://data.radioclassique.fr/XML_Metadata/direct_2.xml";
 
     const response = await fetch(url, {
