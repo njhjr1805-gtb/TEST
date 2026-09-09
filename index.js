@@ -1,4 +1,5 @@
 import express from "express";
+import { log } from "node:console";
 import xml2js from "xml2js";
 
 const app = express();
@@ -25,6 +26,7 @@ async function getRadioInfo() {
     }
 
     const data = await parser.parseStringPromise(xml);
+    console.log(data)
 
     if (!data.RadioClassique || !data.RadioClassique.song) {
         console.log("❌PB de balise");
