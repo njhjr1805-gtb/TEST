@@ -1,5 +1,4 @@
 import express from "express";
-import { log } from "node:console";
 import xml2js from "xml2js";
 
 const app = express();
@@ -17,23 +16,19 @@ async function getRadioInfo() {
     });
 
     const xml = await response.text();
-    console.log(xml)
-
-    // Vérification du XML
-    if (!xml.includes("<playlist>") || !xml.includes("</playlist>")) {
-        console.log("❌ XML incomplet ou tronqué");
-        return null;
-    }
+    console.log(xml);
 
     const data = await parser.parseStringPromise(xml);
-    console.log(data)
+    console.log(data);
 
-    if (!data.RadioClassique || !data.RadioClassique.song) {
+    // NOUVELLE STRUCTURE
+    const playlist = data.xml?.playlist?.[0];
+    if (!playlist || !playlist.song) {
         console.log("❌PB de balise");
         return null;
     }
 
-    for (const song of data.RadioClassique.song) {
+    for (const song of playlist.song) {
         if (song.Status?.[0] === "En ce moment") {
             console.log("✅ Chanson trouvée !!!");
             return {
@@ -47,7 +42,6 @@ async function getRadioInfo() {
     console.log("❌ Aucune chanson 'En ce moment'");
     return null;
 }
-
 
 app.get("/", async (req, res) => {
     const info = await getRadioInfo();
