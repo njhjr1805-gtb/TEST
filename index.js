@@ -16,6 +16,7 @@ async function getRadioInfo() {
     });
 
     const xml = await response.text();
+    console.log(xml)
 
     // Vérification du XML
     if (!xml.includes("<playlist>") || !xml.includes("</playlist>")) {
