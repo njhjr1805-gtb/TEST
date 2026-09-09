@@ -18,11 +18,13 @@ async function getRadioInfo() {
     const data = await parser.parseStringPromise(xml);
 
     if (!data.RadioClassique || !data.RadioClassique.song) {
+        console.log("❌PB de balise");
         return null;
     }
 
     for (const song of data.RadioClassique.song) {
         if (song.Status?.[0] === "En ce moment") {
+            console.log("✅ Chanson trouvée !!!");
             return {
                 name: song.name?.[0],
                 title: song.title?.[0],
@@ -30,6 +32,7 @@ async function getRadioInfo() {
             };
         }
     }
+    console.log("❌ Aucune chanson 'En ce moment'");
     return null;
 }
 
