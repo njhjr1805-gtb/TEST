@@ -6,9 +6,20 @@ const parser = new xml2js.Parser();
 
 async function getRadioInfo() {
     const url = "https://data.radioclassique.fr/XML_Metadata/direct_2.xml";
-    const response = await fetch(url);
+
+    const response = await fetch(url, {
+        headers: {
+            "User-Agent": "Mozilla/5.0",
+            "Accept": "application/xml,text/xml"
+        }
+    });
+
     const xml = await response.text();
     const data = await parser.parseStringPromise(xml);
+
+    if (!data.RadioClassique || !data.RadioClassique.song) {
+        return null;
+    }
 
     for (const song of data.RadioClassique.song) {
         if (song.Status?.[0] === "En ce moment") {
