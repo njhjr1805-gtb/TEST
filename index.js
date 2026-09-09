@@ -53,9 +53,9 @@ app.get("/", async (req, res) => {
 
     res.send(`
         <html><body>
-        <p>${info.name}</p>
-        <p>${info.title}</p>
-        <p>${info.interpretes}</p>
+        <p>Compositeur : ${info.name}</p>
+        <p>Titre : ${info.title}</p>
+        <p>Interprète : ${info.interpretes}</p>
         </body></html>
     `);
 });
