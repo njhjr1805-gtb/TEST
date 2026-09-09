@@ -1,4 +1,5 @@
 import express from "express";
+import fetch from "node-fetch";
 import xml2js from "xml2js";
 
 const app = express();
@@ -8,7 +9,6 @@ async function getRadioInfo() {
     const url = "https://data.radioclassique.fr/XML_Metadata/direct_2.xml";
     const response = await fetch(url);
     const xml = await response.text();
-
     const data = await parser.parseStringPromise(xml);
 
     for (const song of data.RadioClassique.song) {
@@ -25,16 +25,7 @@ async function getRadioInfo() {
 
 app.get("/", async (req, res) => {
     const info = await getRadioInfo();
-
-    if (!info) {
-        return res.send("<h1>Aucune info disponible</h1>");
-    }
-
-    res.send(`
-        <h1>TEST</h1>
-        <p>${info.name} — ${info.title}</p>
-        <p>${info.interpretes}</p>
-    `);
+    res.send(info ? info : "Aucune info");
 });
 
-app.listen(3000, () => console.log("Serveur lancé"));
+app.listen(process.env.PORT || 3000);
