@@ -17,6 +17,7 @@ async function getRadioInfo() {
 
     const xml = await response.text();
     const data = await parser.parseStringPromise(xml);
+    console.log("XML reçu :", xml.substring(0, 200));
 
     if (!data.RadioClassique || !data.RadioClassique.song) {
         console.log("❌PB de balise");
