@@ -45,7 +45,19 @@ async function getRadioInfo() {
 
 app.get("/", async (req, res) => {
     const info = await getRadioInfo();
-    res.send(info ? info : "Aucune info");
+
+    if (!info) {
+        res.send("<html><body>Aucune info</body></html>");
+        return;
+    }
+
+    res.send(`
+        <html><body>
+        <p>${info.name}</p>
+        <p>${info.title}</p>
+        <p>${info.interpretes}</p>
+        </body></html>
+    `);
 });
 
 app.listen(3000, () => console.log("Serveur lancé"));
