@@ -47,7 +47,7 @@ app.get("/", async (req, res) => {
     const info = await getRadioInfo();
 
     if (!info) {
-        res.send("<html><body>Aucune info</body></html>");
+        res.send("<html><body>  <p>Aucune info</p>  <br>  <p>${info}</p>  </body></html>");
         return;
     }
 
