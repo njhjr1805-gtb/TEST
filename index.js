@@ -53,9 +53,15 @@ app.get("/", async (req, res) => {
 
     res.send(`
         <html><body>
-        <p>Compositeur : ${info.name}</p>
-        <p>Titre : ${info.title}</p>
-        <p>Interprète : ${info.interpretes}</p>
+            <h3>Compositeur</h3>
+            <p>${info.name}</p>
+
+            <h3>Titre</h3>
+            <p>${info.title}</p>
+
+            <h3>Interprètes</h3>
+            <p>${info.interpretes}</p>
+
         </body></html>
     `);
 });
