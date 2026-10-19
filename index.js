@@ -5,6 +5,8 @@ const app = express();
 const parser = new xml2js.Parser();
 
 async function getRadioInfo() {
+    let lastXml = "";
+
     console.log("RC searching...");
     const url = "https://data.radioclassique.fr/XML_Metadata/direct_2.xml";
 
@@ -16,6 +18,7 @@ async function getRadioInfo() {
     });
 
     const xml = await response.text();
+    lastXml = xml;
     console.log(xml);
 
     const data = await parser.parseStringPromise(xml);
@@ -47,7 +50,14 @@ app.get("/", async (req, res) => {
     const info = await getRadioInfo();
 
     if (!info) {
-        res.send("<html><body>  <p>Aucune info</p>  <br>  <p>${info}</p>  </body></html>");
+        res.send(`
+            <html>
+                <body>
+                    <h2>Aucune info trouvée</h2>
+                    <pre>${lastXml}</pre>
+                </body>
+            </html>
+        `);
         return;
     }
 
