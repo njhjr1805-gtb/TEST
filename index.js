@@ -63,14 +63,16 @@ app.get("/", async (req, res) => {
 
     res.send(`
         <html><body>
-            <h3>Compositeur</h3>
-            <p>${info.name}</p>
+            <details> <summary>RC</summary>
+                <h3>Compositeur</h3>
+                <p>${info.name}</p>
 
-            <h3>Titre</h3>
-            <p>${info.title}</p>
+                <h3>Titre</h3>
+                <p>${info.title}</p>
 
-            <h3>Interprètes</h3>
-            <p>${info.interpretes}</p>
+                <h3>Interprètes</h3>
+                <p>${info.interpretes}</p>
+            </detail>
 
         </body></html>
     `);
