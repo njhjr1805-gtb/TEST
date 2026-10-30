@@ -1,2 +1,2 @@
-document.getElementById("titre").textContent =
+document.getElementById("paragraphe").textContent =
     "Le JavaScript fonctionne !";
