@@ -1,17 +1,14 @@
 document.getElementById("paragraphe").textContent =
-    "Étape 1";
+    "Début";
 
-fetch("/load")
-    .then(function(response) {
+var xhr = new XMLHttpRequest();
+
+xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
         document.getElementById("paragraphe").textContent =
-            "Étape 2";
-        return response.text();
-    })
-    .then(function(texte) {
-        document.getElementById("paragraphe").textContent =
-            "Étape 3 : " + texte;
-    })
-    .catch(function(err) {
-        document.getElementById("paragraphe").textContent =
-            "Erreur";
-    });
+            xhr.responseText;
+    }
+};
+
+xhr.open("GET", "/load", true);
+xhr.send();
