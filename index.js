@@ -34,6 +34,8 @@ app.get("/test", (req, res) => {
     res.send("TEST OK");
 });
 
+console.log("VERSION AVEC TEST CHARGEE");
+
 app.listen(3000, () => {
     console.log("Serveur lancé");
 });
