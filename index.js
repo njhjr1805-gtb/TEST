@@ -30,6 +30,10 @@ app.get("/load", (req, res) => {
     res.send(texte);
 });
 
+app.get("/test", (req, res) => {
+    res.send("TEST OK");
+});
+
 app.listen(3000, () => {
     console.log("Serveur lancé");
 });
