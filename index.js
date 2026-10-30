@@ -1,81 +1,9 @@
 import express from "express";
-import xml2js from "xml2js";
 
 const app = express();
-const parser = new xml2js.Parser();
 
-async function getRadioInfo() {
-    let lastXml = "";
+app.use(express.static("public"));
 
-    console.log("RC searching...");
-    const url = "https://data.radioclassique.fr/XML_Metadata/direct_2.xml";
-
-    const response = await fetch(url, {
-        headers: {
-            "User-Agent": "Mozilla/5.0",
-            "Accept": "application/xml,text/xml"
-        }
-    });
-
-    const xml = await response.text();
-    lastXml = xml;
-    console.log(xml);
-
-    const data = await parser.parseStringPromise(xml);
-    console.log(data);
-
-    // NOUVELLE STRUCTURE
-    const playlist = data.xml?.playlist?.[0];
-    if (!playlist || !playlist.song) {
-        console.log("❌PB de balise");
-        return null;
-    }
-
-    for (const song of playlist.song) {
-        if (song.Status?.[0] === "En ce moment") {
-            console.log("✅ Chanson trouvée !!!");
-            return {
-                name: song.name?.[0],
-                title: song.title?.[0],
-                interpretes: song.Interpretes?.[0]
-            };
-        }
-    }
-
-    console.log("❌ Aucune chanson 'En ce moment'");
-    return null;
-}
-
-app.get("/", async (req, res) => {
-    const info = await getRadioInfo();
-
-    if (!info) {
-        res.send(`
-            <html>
-                <body>
-                    <h2>Aucune info trouvée</h2>
-                    <pre>${lastXml}</pre>
-                </body>
-            </html>
-        `);
-        return;
-    }
-
-    res.send(`
-        <html><body>
-            <details> <summary>RC</summary>
-                <h3>Compositeur</h3>
-                <p>${info.name}</p>
-
-                <h3>Titre</h3>
-                <p>${info.title}</p>
-
-                <h3>Interprètes</h3>
-                <p>${info.interpretes}</p>
-            </detail>
-
-        </body></html>
-    `);
+app.listen(3000, () => {
+    console.log("Serveur lancé");
 });
-
-app.listen(3000, () => console.log("Serveur lancé"));
